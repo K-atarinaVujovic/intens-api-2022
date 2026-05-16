@@ -27,3 +27,6 @@ jobs:
         name: Maven Tests
         path: target/surefire-reports/*.xml
         reporter: java-junit
+        report-title: Test results
+        list-tests: 'all'
+        list-suites: 'failed'
