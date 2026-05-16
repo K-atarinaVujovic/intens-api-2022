@@ -1,11 +1,11 @@
-name: Java CI with Maven
+name: CI
 
 on:
   pull_request:
     branches: [ "master" ]
 
 jobs:
-  build:
+  build-and-test:
     runs-on: ubuntu-latest
     env:
       PORT: 8080
