@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: intens-deployment
+spec:
+  selector:
+    matchLabels:
+      app: intens
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: intens
+    spec:
+      containers:
+      - name: intens
+        image: intens-api-2022-server:latest
+        imagePullPolicy: Never  # making sure it doesn't pull the image from docker hub
+        ports:
+        - containerPort: 8080
+        env:
+        - name: PORT
+          value: "8080"
