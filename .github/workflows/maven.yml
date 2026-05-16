@@ -7,6 +7,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      PORT: 8080
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
