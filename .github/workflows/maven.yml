@@ -29,3 +29,4 @@ jobs:
         reporter: java-junit
         report-title: Test results
         list-tests: 'all'
+        list-suites: 'failed' # only show names of failed tests
