@@ -86,7 +86,7 @@ jobs:
           cosign-release: 'v2.2.4'
       - name:  Verify signature
         run: |
-          cosign verify ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }} \
+          cosign verify ${{ env.IMAGE_REF }} \
             --certificate-identity ${{ github.server_url }}/${{ github.workflow_ref }} \
             --certificate-oidc-issuer https://token.actions.githubusercontent.com
       - name: Install Railway CLI
