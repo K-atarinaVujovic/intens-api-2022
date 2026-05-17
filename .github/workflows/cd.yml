@@ -75,8 +75,17 @@ jobs:
     runs-on: ubuntu-latest
     container: ghcr.io/railwayapp/cli:latest
     env:
+      REGISTRY: ghcr.io
+      IMAGE_NAME: ${{ github.repository }} # k-atarinavujovic/intens-api-2022
+      IMAGE_TAG: ${{ github.ref_name }} # master
       SVC_ID: ${{ secrets.RAILWAY_SERVICE_ID }}
       RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
     steps:
-      - run: railway redeploy --service=${{ env.SVC_ID }} -y
+      - name:  Verify signature
+        run: |
+          cosign verify ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }} \
+            --certificate-identity ${{ github.server_url }}/${{ github.workflow_ref }} \
+            --certificate-oidc-issuer https://token.actions.githubusercontent.com
+      - name: Deploy to railway
+        run: railway redeploy --service=${{ env.SVC_ID }} -y
       
