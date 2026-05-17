@@ -75,7 +75,7 @@ jobs:
     runs-on: ubuntu-latest
     container: ghcr.io/railwayapp/cli:latest
     env:
-      SVC_ID: c5abc16d-f6df-42b8-b500-5abe205ce88e
+      SVC_ID: ${{ secrets.RAILWAY_SERVICE_ID }}
       RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
     steps:
       - run: railway redeploy --service=${{ env.SVC_ID }} -y
