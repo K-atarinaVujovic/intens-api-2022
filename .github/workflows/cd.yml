@@ -57,13 +57,13 @@ jobs:
         with:
           context: . 
           push: true
-          tags: ${{ steps.meta.outputs.tags }} # ghcr.io/k-atarinavujovic/intens-api-2022:latest
+          tags: ${{ steps.meta.outputs.tags }} # ghcr.io/k-atarinavujovic/intens-api-2022:master
           labels: ${{ steps.meta.outputs.labels }} # additional info
           cache-from: type=gha # read cache from Github Actions cache
           cache-to: type=gha,mode=max # write to Github Actions cache. mode=max means cache intermediate layers too
 
       # https://github.com/sigstore/cosign
-      - name: Sign the published Docker image # sign image for security reasons
+      - name: Sign the published Docker image 
         env:
           TAGS: ${{ steps.meta.outputs.tags }}
           DIGEST: ${{ steps.build-and-push.outputs.digest }} # hashed image contents
@@ -84,6 +84,8 @@ jobs:
         uses: sigstore/cosign-installer@59acb6260d9c0ba8f4a2f9d9b48431a222b68e20 #v3.5.0
         with:
           cosign-release: 'v2.2.4'
+      # Signature verification (and signing in general) isn't of much use when done consecutively 
+      # in the same workflow like this, implemented it for testing purposes
       - name:  Verify signature
         run: |
           cosign verify ${{ env.IMAGE_REF }} \
