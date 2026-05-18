@@ -1,7 +1,10 @@
 services:
   server:
-    build:
-      context: .
+    image: ghcr.io/k-atarinavujovic/intens-api-2022:master
+    # check for newer version every time (version is always master,
+    # so it needs to be told to always check if it was updated,
+    # otherwise it would use cached)
+    pull_policy: always
     ports:
       - "8080:8080"
     environment:

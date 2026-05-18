@@ -14,8 +14,8 @@ spec:
     spec:
       containers:
       - name: intens
-        image: intens-api-2022-server:latest
-        imagePullPolicy: Never  # making sure it doesn't pull the image from docker hub
+        image: ghcr.io/k-atarinavujovic/intens-api-2022:master
+        imagePullPolicy: Always
         ports:
         - containerPort: 8080
         env:
