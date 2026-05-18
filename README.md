@@ -1,18 +1,43 @@
-# Intens Api DevOps
-Uputstvo za izradu.
+Live API link: https://intens-api-2022-server-production.up.railway.app/
 
-## Koraci
-1. Forkovati repozitorijum
-2. Pokrenuti api lokalno koristeci alat po izboru (dodati env variablu PORT i dodeliti vrednost 8080 ili bilo koji drugi dostupan port)
-3. Napisati Dockerfile (5 bodova)
-4. Upraditi deploy apia na bilo koji cloud provider, moze i docker / kubernetes lokalno (5 bodova)
-5. Implemetirati CI CD koristeci GitHub Actions, potrebno je kreirati dve ci cd skripte. Prva skripta treba da se pokrece automatski prilikom kreiranja PR nad master granom i treba da izvrsi testove. 2. skripta treba da se pokrece automatski prilikom pusha na master granu i treba da izvrsava build apia, pakovanje i odlaganje docker slike na repo po zelji i zamenu stare za novu sliku na odabranom cloud provideru ili lokalu. (10 bodova)
-6. Na email poslati url vaseg git repoa kao i url otpremljenog apia na cloud provider ili lokalni url.
+Note: A few additional tests were added in the base project for the test report demo in [this workflow summary](https://github.com/K-atarinaVujovic/intens-api-2022/actions/runs/26008916796?pr=3).
 
-### Korisni Linkovi
-https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-maven
+# About
+A simple Java API with a multi-stage Dockerfile, setup for local deployment with Docker and Kubernetes, and a CI/CD pipeline with deployment to [Railway](https://railway.com).
 
-### Potrebni Alati
-1. Java 8 https://www.oracle.com/java/technologies/javase/javase8-archive-downloads.html
-2. Eclipse / IntelliJ / Alat po izboru
-3. Docker https://www.docker.com/products/docker-desktop
+The Dockerfile uses a multi-stage build with layer caching.
+
+Local Docker and Kubernetes deployments pull the image from the [GitHub Container Registry](https://github.com/K-atarinaVujovic/intens-api-2022/pkgs/container/intens-api-2022) instead of using a locally built image.
+
+The CI workflow builds and tests pull requests to master. A test report is published in the workflow run summary, which would help improve PR reviewing speed.
+
+The CD workflow builds and pushes the image to GHCR, then deploys to Railway.
+
+# Deploying locally
+The API can also be deployed locally either with [Docker](https://www.docker.com/) or [Kubernetes](https://kubernetes.io/).
+
+## Docker
+**Prerequisites:** [Docker Desktop](https://www.docker.com/products/docker-desktop/)  
+
+From the project root:  
+```
+docker compose up
+```  
+Runs on http://localhost:8080  
+
+## Kubernetes
+**Prerequisites:** [Docker Desktop](https://www.docker.com/products/docker-desktop/), [Minikube](https://minikube.sigs.k8s.io/docs/start/)  
+
+In the Kubernetes/ folder run:  
+```
+minikube start
+kubectl apply -f deployment.yaml
+kubectl apply -f service.yaml
+minikube service intens-service
+```  
+The API URL will be printed afterwards, and the page will open automatically.  
+
+To stop:  
+```
+minikube stop
+```
