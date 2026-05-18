@@ -48,4 +48,11 @@ class CandidateUnitTests {
                 new Candidate(VALID_FIRST, VALID_LAST, future, VALID_PHONE, VALID_EMAIL))
                 .isInstanceOf(IllegalArgumentException.class);
     }
+
+    @Test
+    void failsIntentionally() {
+        boolean fact = false;
+
+        assertThat(fact).isEqualTo(true);
+    }
 }
